@@ -72,7 +72,7 @@ def reset():
 
     playing = True
     word = wordbank[random.randint(0, len(wordbank) - 1)]
-    print(word)
+    # print(word) #for testing
     underscores = ["_ "] * len(word)
     letters_guessed = []
     wrong_guesses = 0
