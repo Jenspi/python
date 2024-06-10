@@ -72,7 +72,7 @@ def reset():
 
     playing = True
     word = wordbank[random.randint(0, len(wordbank) - 1)]
-    # print(word) #for testing purposes
+    print(word)
     underscores = ["_ "] * len(word)
     letters_guessed = []
     wrong_guesses = 0
@@ -107,48 +107,48 @@ def lost():
         game()
 
 def game():
-	global playing
-	while playing:
-        print(man[wrong_guesses])
-        print("[LETTERS GUESSED]: " + ", ".join(letters_guessed))
-        print("\n" + "".join(underscores))
-        userInput = (input("Guess a letter: ")).lower()
+    global playing
+while playing:
+    print(man[wrong_guesses])
+    print("[LETTERS GUESSED]: " + ", ".join(letters_guessed))
+    print("\n" + "".join(underscores))
+    userInput = (input("Guess a letter: ")).lower()
 
-        if userInput.lower() == "quit":
-            playing = False
-            print("Thanks for playing :)")
+    if userInput.lower() == "quit":
+        playing = False
+        print("Thanks for playing :)")
 
-        # if input was already guessed
-        if userInput in letters_guessed:
-            print("// Letter already guessed! //")
+    # if input was already guessed
+    if userInput in letters_guessed:
+        print("// Letter already guessed! //")
 
-        # if user's input is as long as the word, or is one letter
-        if len(userInput) == len(word) or len(userInput) == 1:
-            letters_guessed.append(userInput)
-            # if user's guess is as long as word
-            if len(userInput) == len(word):
-                if userInput == word:
-                    won()
+    # if user's input is as long as the word, or is one letter
+    if len(userInput) == len(word) or len(userInput) == 1:
+        letters_guessed.append(userInput)
+        # if user's guess is as long as word
+        if len(userInput) == len(word):
+            if userInput == word:
+                won()
+                break
+            elif userInput != word:
+                incorrect()
+        # else if guess is a single letter
+        elif len(userInput) == 1:
+            if userInput not in word:
+                incorrect()
+                # check to see if amount of tries is up
+                if wrong_guesses >= 6:
+                    lost()
                     break
-                elif userInput != word:
-                    incorrect()
-            # else if guess is a single letter
-            elif len(userInput) == 1:
-                if userInput not in word:
-                    incorrect()
-                    # check to see if amount of tries is up
-                    if wrong_guesses >= 6:
-                        lost()
-                        break
-                # if guess is correct, place letter in correct spot
-                elif userInput in word:
-                    for x in range(len(word)):
-                        if userInput == word[x]:
-                            underscores[x] = userInput + " "
+            # if guess is correct, place letter in correct spot
+            elif userInput in word:
+                for x in range(len(word)):
+                    if userInput == word[x]:
+                        underscores[x] = userInput + " "
 
-        # if the user's guess isn't one letter or as long as the word, give error
-        elif (len(userInput) < len(word) or len(userInput) > len(word)) and len(userInput) != 1 and userInput != "quit":
-            print("Not valid input! Try guessing the whole word (" + str(
-                len(word)) + " letters total in this case) or one letter at a time.")
+    # if the user's guess isn't one letter or as long as the word, give error
+    elif (len(userInput) < len(word) or len(userInput) > len(word)) and len(userInput) != 1 and userInput != "quit":
+        print("Not valid input! Try guessing the whole word (" + str(
+            len(word)) + " letters total in this case) or one letter at a time.")
 
 game()
